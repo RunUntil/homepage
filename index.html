@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RunUntil Technologies GmbH</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #121212;
+            --bg-light: #1e1e1e;
+            --bg-lighter: #333333;
+            --text: #bebebe;
+            --text-dim: #8a8a8d;
+            --accent: #FFC107;
+            --accent-dim: #e68e0d;
+            --border: #333333;
+            --orange: #D35F5F;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.6;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo-container {
+            text-align: center;
+        }
+
+        .logo {
+            width: 200px;
+            height: 200px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        footer {
+            padding: 1.5rem;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            background: var(--bg-light);
+        }
+
+        footer a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s ease;
+        }
+
+        footer a:hover {
+            color: var(--accent);
+        }
+
+        footer .separator {
+            color: var(--border);
+            margin: 0 1rem;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="logo-container">
+            <img src="logo.png" alt="RunUntil Technologies" class="logo">
+        </div>
+    </main>
+    <footer>
+        <a href="https://www.januschka.com">Blog</a>
+        <span class="separator">|</span>
+        <a href="impressum.html">Impressum</a>
+    </footer>
+</body>
+</html>
