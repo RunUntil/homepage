@@ -4,28 +4,87 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RunUntil Technologies GmbH</title>
-    <link rel="icon" type="image/png" href="logo.png">
+    <meta name="description" content="RunUntil Technologies -- we run until it ships.">
+    <meta name="color-scheme" content="dark light">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="favicon-32.png">
+
+    <!-- OpenGraph -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="RunUntil Technologies">
+    <meta property="og:title" content="RunUntil Technologies">
+    <meta property="og:description" content="We run until it ships.">
+    <meta property="og:url" content="https://www.rununtil.com/">
+    <meta property="og:image" content="https://www.rununtil.com/og-image.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="RunUntil Technologies">
+    <meta name="twitter:description" content="We run until it ships.">
+    <meta name="twitter:image" content="https://www.rununtil.com/og-image.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
 
-        :root {
+    <script>
+        // Apply theme as early as possible to avoid flash
+        (function () {
+            try {
+                var saved = localStorage.getItem('theme'); // 'light' | 'dark' | 'auto' | null
+                var mode  = saved || 'auto';
+                var sys   = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+                var eff   = mode === 'auto' ? sys : mode;
+                document.documentElement.setAttribute('data-theme', eff);
+                document.documentElement.setAttribute('data-theme-mode', mode);
+            } catch (e) {}
+        })();
+    </script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* ----- Theme tokens ----- */
+        :root,
+        [data-theme="dark"] {
             --bg: #121212;
             --bg-light: #1e1e1e;
-            --bg-lighter: #333333;
+            --bg-bar: #2a2a2a;
             --text: #bebebe;
             --text-dim: #8a8a8d;
             --accent: #FFC107;
-            --accent-dim: #e68e0d;
+            --accent-glow: rgba(255, 193, 7, 0.35);
+            --accent-grid: rgba(255, 193, 7, 0.06);
             --border: #333333;
-            --orange: #D35F5F;
+            --green: #6ec06e;
+            --shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+            --scan: rgba(0, 0, 0, 0.18);
+            --scan-blend: multiply;
         }
+
+        [data-theme="light"] {
+            --bg: #f6f5f0;
+            --bg-light: #ffffff;
+            --bg-bar: #ececec;
+            --text: #1f1f1f;
+            --text-dim: #6a6a6a;
+            --accent: #c98a00;
+            --accent-glow: rgba(201, 138, 0, 0.30);
+            --accent-grid: rgba(201, 138, 0, 0.10);
+            --border: #d8d4c8;
+            --green: #2f8f3f;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.10);
+            --scan: rgba(0, 0, 0, 0.06);
+            --scan-blend: multiply;
+        }
+
+        html, body { height: 100%; }
 
         body {
             font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
@@ -35,35 +94,188 @@
             display: flex;
             flex-direction: column;
             line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+            transition: background 0.25s ease, color 0.25s ease;
+        }
+
+        /* Dotted grid background */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: radial-gradient(circle, var(--accent-grid) 1px, transparent 1px);
+            background-size: 24px 24px;
+            pointer-events: none;
+            z-index: 0;
+            mask-image: radial-gradient(ellipse at center, black 40%, transparent 85%);
+            -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 85%);
         }
 
         main {
             flex: 1;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
+            padding: 2rem 1.5rem;
+            position: relative;
+            z-index: 1;
+            gap: 2.5rem;
         }
 
-        .logo-container {
-            text-align: center;
+        /* Logo */
+        .logo-wrap {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-wrap::before {
+            content: '';
+            position: absolute;
+            inset: -30px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 65%);
+            filter: blur(12px);
+            animation: pulse 3.5s ease-in-out infinite;
+            z-index: 0;
         }
 
         .logo {
             width: 200px;
             height: 200px;
-            animation: spin 20s linear infinite;
+            position: relative;
+            z-index: 1;
         }
 
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        .logo-wrap::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                to bottom,
+                var(--scan) 0px,
+                var(--scan) 1px,
+                transparent 1px,
+                transparent 3px
+            );
+            pointer-events: none;
+            z-index: 2;
+            border-radius: 50%;
+            mix-blend-mode: var(--scan-blend);
+            animation: flicker 6s steps(2, end) infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.55; transform: scale(1); }
+            50%      { opacity: 1;    transform: scale(1.08); }
+        }
+
+        @keyframes flicker {
+            0%, 96%, 100% { opacity: 0.55; }
+            97% { opacity: 0.25; }
+            98% { opacity: 0.7;  }
+            99% { opacity: 0.4;  }
+        }
+
+        /* Terminal */
+        .terminal {
+            width: min(680px, 100%);
+            background: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            font-size: 0.9rem;
+            transition: background 0.25s ease, border-color 0.25s ease;
+        }
+
+        .terminal-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 0.9rem;
+            background: var(--bg-bar);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .terminal-dot { width: 12px; height: 12px; border-radius: 50%; background: #555; }
+        .terminal-dot.red    { background: #ff5f56; }
+        .terminal-dot.yellow { background: #ffbd2e; }
+        .terminal-dot.green  { background: #27c93f; }
+
+        .terminal-title {
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            padding-right: 36px;
+        }
+
+        .terminal-body {
+            padding: 1.1rem 1.2rem 1.3rem;
+            min-height: 200px;
+            white-space: pre-wrap;
+            word-break: break-word;
+            cursor: text;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .prompt { color: var(--green); }
+        .cmd    { color: var(--text); }
+        .flag   { color: var(--accent); }
+        .out    { color: var(--text-dim); display: block; }
+        .word   { color: var(--accent); font-weight: 600; }
+        .err    { color: #d35f5f; }
+        .ok     { color: var(--green); }
+        .link   { color: var(--accent); text-decoration: underline; cursor: pointer; }
+
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 1em;
+            background: var(--accent);
+            vertical-align: -2px;
+            margin-left: 2px;
+            animation: blink 1s steps(2, start) infinite;
+        }
+
+        @keyframes blink { to { visibility: hidden; } }
+
+        /* Mouse trail glyphs */
+        .glyph {
+            position: fixed;
+            pointer-events: none;
+            color: var(--accent);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            opacity: 0.9;
+            z-index: 5;
+            animation: fadeglyph 900ms ease-out forwards;
+            text-shadow: 0 0 6px var(--accent-glow);
+        }
+
+        @keyframes fadeglyph {
+            0%   { opacity: 0.9; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0;   transform: translate(-50%, -150%) scale(0.6); }
         }
 
         footer {
-            padding: 1.5rem;
-            text-align: center;
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
             border-top: 1px solid var(--border);
             background: var(--bg-light);
+            position: relative;
+            z-index: 1;
+            transition: background 0.25s ease, border-color 0.25s ease;
         }
 
         footer a {
@@ -72,27 +284,586 @@
             font-size: 0.875rem;
             transition: color 0.2s ease;
         }
+        footer a:hover { color: var(--accent); }
+        footer .separator { color: var(--border); }
 
-        footer a:hover {
-            color: var(--accent);
+        .theme-toggle {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-dim);
+            font-family: inherit;
+            font-size: 0.8rem;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: color 0.2s ease, border-color 0.2s ease;
+        }
+        .theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
+        .theme-toggle svg { width: 14px; height: 14px; }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            .logo-wrap::before { animation: none; opacity: 0.6; }
+            .logo-wrap::after  { animation: none; }
+            .cursor            { animation: none; }
+            .glyph             { display: none; }
         }
 
-        footer .separator {
-            color: var(--border);
-            margin: 0 1rem;
+        @media (max-width: 600px) {
+            .logo-wrap, .logo { width: 150px; height: 150px; }
+            .terminal { font-size: 0.8rem; }
+            .terminal-title { display: none; }
         }
     </style>
 </head>
 <body>
     <main>
-        <div class="logo-container">
+        <div class="logo-wrap" aria-hidden="true">
             <img src="logo.png" alt="RunUntil Technologies" class="logo">
         </div>
+
+        <section class="terminal" aria-label="RunUntil terminal" id="terminal">
+            <div class="terminal-bar">
+                <span class="terminal-dot red"></span>
+                <span class="terminal-dot yellow"></span>
+                <span class="terminal-dot green"></span>
+                <span class="terminal-title">rununtil -- zsh</span>
+            </div>
+            <div class="terminal-body" id="term">
+                <span id="line1"></span><span id="line2"></span><span id="line3"></span><div id="history"></div><div id="active"></div>
+            </div>
+        </section>
     </main>
+
     <footer>
         <a href="https://www.januschka.com">Blog</a>
         <span class="separator">|</span>
+        <a href="mailto:helmut@januschka.com">Contact</a>
+        <span class="separator">|</span>
         <a href="impressum.html">Impressum</a>
+        <span class="separator">|</span>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
+            <span id="themeIcon"></span><span id="themeLabel"></span>
+        </button>
     </footer>
+
+    <script>
+    (function () {
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        /* ===================== THEME TOGGLE ===================== */
+        const ICONS = {
+            light: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>',
+            dark:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>',
+            auto:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>'
+        };
+
+        const html = document.documentElement;
+        const btn  = document.getElementById('themeToggle');
+        const icon = document.getElementById('themeIcon');
+        const label= document.getElementById('themeLabel');
+        const sysQ = window.matchMedia('(prefers-color-scheme: light)');
+
+        function applyMode(mode) {
+            const eff = mode === 'auto' ? (sysQ.matches ? 'light' : 'dark') : mode;
+            html.setAttribute('data-theme', eff);
+            html.setAttribute('data-theme-mode', mode);
+            icon.innerHTML = ICONS[mode];
+            label.textContent = mode;
+            try { localStorage.setItem('theme', mode); } catch (e) {}
+        }
+
+        const order = ['auto', 'light', 'dark'];
+        function current() { return html.getAttribute('data-theme-mode') || 'auto'; }
+
+        applyMode(current());
+        btn.addEventListener('click', () => {
+            const i = order.indexOf(current());
+            applyMode(order[(i + 1) % order.length]);
+        });
+        sysQ.addEventListener('change', () => {
+            if (current() === 'auto') applyMode('auto');
+        });
+
+        /* ===================== INTRO TYPING ===================== */
+        const line1 = document.getElementById('line1');
+        const line2 = document.getElementById('line2');
+        const line3 = document.getElementById('line3');
+        const active = document.getElementById('active');
+        const history = document.getElementById('history');
+        const termBody = document.getElementById('term');
+        const terminal = document.getElementById('terminal');
+
+        const words = ['it works.', 'it ships.', 'it scales.', '4am.', 'the build is green.', 'the bug is dead.'];
+
+        function wait(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+        function typeHTML(el, html, speed) {
+            return new Promise(resolve => {
+                if (reduced) { el.innerHTML = html; return resolve(); }
+                const tmp = document.createElement('div');
+                tmp.innerHTML = html;
+                const nodes = Array.from(tmp.childNodes);
+                let ni = 0;
+                function nextNode() {
+                    if (ni >= nodes.length) return resolve();
+                    const n = nodes[ni++];
+                    if (n.nodeType === Node.TEXT_NODE) {
+                        const text = n.textContent;
+                        let i = 0;
+                        (function tick() {
+                            if (i >= text.length) return nextNode();
+                            el.appendChild(document.createTextNode(text[i++]));
+                            setTimeout(tick, speed);
+                        })();
+                    } else {
+                        const clone = n.cloneNode(false);
+                        el.appendChild(clone);
+                        const inner = n.textContent;
+                        let i = 0;
+                        (function tick() {
+                            if (i >= inner.length) return nextNode();
+                            clone.appendChild(document.createTextNode(inner[i++]));
+                            setTimeout(tick, speed);
+                        })();
+                    }
+                }
+                nextNode();
+            });
+        }
+
+        let introDone = false;
+        let rotStop = false;
+
+        async function intro() {
+            await typeHTML(line1, '<span class="prompt">$</span> <span class="cmd">rununtil </span><span class="flag">--target</span><span class="cmd">=impossible</span>\n', 35);
+            await wait(250);
+            await typeHTML(line2, '<span class="out">  building things that shouldn\'t exist...</span>\n', 18);
+            await wait(400);
+            line3.innerHTML = '<span class="prompt">$</span> <span class="cmd">rununtil </span><span class="word" id="rot"></span>\n';
+            const rot = document.getElementById('rot');
+            let idx = 0, cycles = 0;
+            (async function cycle() {
+                while (!rotStop) {
+                    const w = words[idx % words.length];
+                    for (let i = 0; i < w.length && !rotStop; i++) {
+                        rot.textContent = w.slice(0, i + 1);
+                        await wait(reduced ? 0 : 55);
+                    }
+                    await wait(reduced ? 1200 : 2000);
+                    if (rotStop) break;
+                    for (let i = w.length; i > 0 && !rotStop; i--) {
+                        rot.textContent = w.slice(0, i - 1);
+                        await wait(25);
+                    }
+                    idx++; cycles++;
+                    if (cycles >= 2) break; // hand over to interactive prompt
+                }
+                if (!rotStop) {
+                    rot.textContent = words[(idx) % words.length];
+                    // type it once more, then freeze
+                    for (let i = 0; i < rot.textContent.length; i++) {
+                        // no-op (already shown); just settle
+                    }
+                }
+                introDone = true;
+                showHint();
+                showPrompt();
+            })();
+        }
+
+        /* ===================== INTERACTIVE PROMPT ===================== */
+        const PROMPT_HTML = '<span class="prompt">$</span> ';
+        let inputBuf = '';
+        let inputEl = null;
+        let cursorEl = null;
+        let cmdHistory = [];
+        let histIdx = -1;
+
+        function showHint() {
+            const hint = document.createElement('div');
+            hint.className = 'out';
+            hint.innerHTML = '\n# type <span class="word">help</span> to explore. click to focus.\n';
+            history.appendChild(hint);
+        }
+
+        function showPrompt() {
+            active.innerHTML = '';
+            const wrap = document.createElement('span');
+            wrap.innerHTML = PROMPT_HTML;
+            inputEl = document.createElement('span');
+            inputEl.className = 'cmd';
+            cursorEl = document.createElement('span');
+            cursorEl.className = 'cursor';
+            wrap.appendChild(inputEl);
+            wrap.appendChild(cursorEl);
+            active.appendChild(wrap);
+            inputBuf = '';
+            scroll();
+        }
+
+        function scroll() { termBody.scrollTop = termBody.scrollHeight; }
+
+        function print(html) {
+            const div = document.createElement('div');
+            div.innerHTML = html;
+            history.appendChild(div);
+            scroll();
+        }
+
+        function commitCommand() {
+            const line = document.createElement('div');
+            line.innerHTML = PROMPT_HTML + '<span class="cmd"></span>';
+            line.querySelector('.cmd').textContent = inputBuf;
+            history.appendChild(line);
+            if (inputBuf.trim()) {
+                cmdHistory.push(inputBuf);
+                histIdx = cmdHistory.length;
+            }
+            const cmd = inputBuf.trim();
+            inputBuf = '';
+            return cmd;
+        }
+
+        function escapeHTML(s) {
+            return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+        }
+
+const FORTUNES = [
+            'ship it. fix it. ship it again.',
+            'the build is green. ride.',
+            'works on my machine -- shipping it.',
+            'every CL is a love letter to the next dev.',
+            'rebase early, rebase often.',
+            'if it compiles, run it. if it runs, ship it.',
+            'the best time to land a CL was last quarter. the second best time is now.',
+            'OWNERS files are written in blood and reviews.',
+            'no flake, no glory.'
+        ];
+
+        const COMMANDS = {
+            help() {
+                return [
+                    'available commands:',
+                    '  <span class="word">help</span>            show this',
+                    '  <span class="word">about</span>           what is RunUntil',
+                    '  <span class="word">whoami</span>          who runs the show',
+                    '  <span class="word">contact</span>         get in touch',
+                    '  <span class="word">socials</span>         github / x / linkedin',
+                    '  <span class="word">blog</span>            open januschka.com (personal)',
+                    '  <span class="word">stack</span>           tech stack',
+                    '  <span class="word">projects</span>        focus areas',
+                    '  <span class="word">fortune</span>         words of wisdom from the build queue',
+                    '  <span class="word">cowsay</span> &lt;msg&gt;    moo.',
+                    '  <span class="word">coffee</span>          critical infrastructure',
+                    '  <span class="word">matrix</span>          take the red pill',
+                    '  <span class="word">theme</span> [light|dark|auto]',
+                    '  <span class="word">impressum</span>       legal info',
+                    '  <span class="word">date</span> / <span class="word">ls</span> / <span class="word">echo</span> / <span class="word">clear</span> / <span class="word">exit</span> / <span class="word">sudo</span> / <span class="word">man</span>'
+                ].join('\n');
+            },
+            whoami() {
+                return 'helmut januschka -- owner, RunUntil Technologies GmbH\n  (see <span class="link" data-cmd="about">about</span> for what the company does)';
+            },
+            about() {
+                return [
+                    'RunUntil Technologies GmbH',
+                    '  -- consulting & browser engineering',
+                    '  -- based in vienna, austria',
+                    '',
+                    '  <span class="link" data-cmd="contact">contact</span> for inquiries.'
+                ].join('\n');
+            },
+            contact() {
+                return '<span class="word">helmut@januschka.com</span>';
+            },
+            socials() {
+                return [
+                    '  github   <span class="link" data-href="https://github.com/hjanuschka">github.com/hjanuschka</span>',
+                    '  x        <span class="link" data-href="https://x.com/hjanuschka">x.com/hjanuschka</span>',
+                    '  linkedin <span class="link" data-href="https://linkedin.com/in/hjanuschka">linkedin.com/in/hjanuschka</span>',
+                    '  blog     <span class="link" data-href="https://www.januschka.com">januschka.com</span>'
+                ].join('\n');
+            },
+            blog() {
+                window.open('https://www.januschka.com', '_blank', 'noopener');
+                return '<span class="ok">opening januschka.com ...</span>';
+            },
+stack() {
+                return [
+                    '  languages : C++  Rust  TypeScript  Python',
+                    '  platforms : chromium  blink  pdfium  llvm  v8',
+                    '  systems   : wayland  vaapi  dns  ipc  shared-memory',
+                    '  tooling   : clang-tidy  gerrit  git  pi'
+                ].join('\n');
+            },
+            projects() {
+                return [
+                    '- chromium / blink / pdfium engineering',
+                    '- web platform features (lazy media, focus, speculation rules)',
+                    '- video / codec work (av1, jpeg xl, vaapi)',
+                    '- networking internals (https-rr, hev3)',
+                    '- llvm / clang-tidy checks',
+                    '- developer tooling and ai-assisted workflows'
+                ].join('\n');
+            },
+fortune() {
+                return '<span class="word">' + FORTUNES[Math.floor(Math.random() * FORTUNES.length)] + '</span>';
+            },
+            cowsay(...args) {
+                const msg = args.join(' ') || 'moo.';
+                const len = msg.length;
+                const top = ' ' + '_'.repeat(len + 2);
+                const bot = ' ' + '-'.repeat(len + 2);
+                return escapeHTML(
+                    top + '\n' +
+                    '< ' + msg + ' >\n' +
+                    bot + '\n' +
+                    '        \\   ^__^\n' +
+                    '         \\  (oo)\\_______\n' +
+                    '            (__)\\       )\\/\\\n' +
+                    '                ||----w |\n' +
+                    '                ||     ||'
+                );
+            },
+            coffee() {
+                return [
+                    '   ( (',
+                    '    ) )',
+                    '  ........',
+                    '  |      |]',
+                    '  \\      /',
+                    '   `----\'',
+                    '',
+                    '<span class="ok">brewed.</span> critical infrastructure restored.'
+                ].join('\n');
+            },
+            matrix() {
+                startMatrix();
+                return '<span class="ok">wake up, neo... press any key to exit.</span>';
+            },
+            date() {
+                return new Date().toString();
+            },
+            clear() {
+                history.innerHTML = '';
+                line1.textContent = ''; line2.textContent = ''; line3.textContent = '';
+                rotStop = true;
+                return null;
+            },
+            exit() {
+                return '<span class="err">nope. we run until.</span>';
+            },
+            sudo() {
+                return '<span class="err">helmut is not in the sudoers file. this incident will be reported.</span>';
+            },
+            ls() {
+                return 'index.html  impressum.html  logo.png  robots.txt';
+            },
+            man(cmd) {
+                if (!cmd) return 'what manual page do you want?';
+                if (cmd === 'rununtil') return [
+                    'RUNUNTIL(1)                  RunUntil Manual                  RUNUNTIL(1)',
+                    '',
+                    'NAME',
+                    '       rununtil -- run until the thing is done',
+                    '',
+                    'SYNOPSIS',
+                    '       rununtil --target=&lt;impossible&gt;',
+                    '',
+                    'DESCRIPTION',
+                    '       a vienna-based browser engineering consultancy.',
+                    '       specialises in chromium, blink, pdfium, and shipping CLs.',
+                    '',
+                    'SEE ALSO',
+                    '       <span class="link" data-cmd="about">about</span>(1), <span class="link" data-cmd="chromium">chromium</span>(1), <span class="link" data-cmd="contact">contact</span>(1)'
+                ].join('\n');
+                if (COMMANDS[cmd]) return 'no man page yet. just run <span class="word">' + escapeHTML(cmd) + '</span>.';
+                return '<span class="err">no manual entry for ' + escapeHTML(cmd) + '</span>';
+            },
+            theme(arg) {
+                if (!arg || !['light','dark','auto'].includes(arg)) {
+                    return 'usage: theme [light|dark|auto]\ncurrent: ' + current();
+                }
+                applyMode(arg);
+                return '<span class="ok">theme set to ' + arg + '</span>';
+            },
+            echo(...args) {
+                return escapeHTML(args.join(' '));
+            }
+        };
+
+        function runCommand(raw) {
+            if (!raw) return;
+            const parts = raw.split(/\s+/);
+            const name = parts[0].toLowerCase();
+            const args = parts.slice(1);
+            if (COMMANDS[name]) {
+                try {
+                    const out = COMMANDS[name](...args);
+                    if (out !== null && out !== undefined) print(out);
+                } catch (e) {
+                    print('<span class="err">error: ' + escapeHTML(String(e)) + '</span>');
+                }
+            } else {
+                print('<span class="err">bash: ' + escapeHTML(name) + ': command not found</span>  <span class="out">(try <span class="word">help</span>)</span>');
+            }
+        }
+
+        function renderInput() {
+            if (inputEl) inputEl.textContent = inputBuf;
+            scroll();
+        }
+
+        // delegated click for link commands / external links
+        history.addEventListener('click', (e) => {
+            const t = e.target.closest('.link');
+            if (!t) return;
+            if (t.dataset.cmd) {
+                inputBuf = t.dataset.cmd;
+                renderInput();
+                const c = commitCommand();
+                runCommand(c);
+                showPrompt();
+            } else if (t.dataset.href) {
+                window.open(t.dataset.href, '_blank', 'noopener');
+            }
+        });
+
+        // Focus / key input
+        let focused = false;
+        function focus() {
+            focused = true;
+            if (cursorEl) cursorEl.style.background = 'var(--accent)';
+        }
+        function blur() {
+            focused = false;
+            if (cursorEl) cursorEl.style.background = 'var(--text-dim)';
+        }
+
+        terminal.addEventListener('click', focus);
+        document.addEventListener('click', (e) => {
+            if (!terminal.contains(e.target)) blur();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (!introDone) return;
+            if (!focused) {
+                // If user starts typing while not focused, focus the terminal
+                if (e.key.length === 1 && !e.metaKey && !e.ctrlKey) focus();
+                else return;
+            }
+            if (e.metaKey || e.ctrlKey) {
+                if (e.key.toLowerCase() === 'l') { e.preventDefault(); COMMANDS.clear(); showPrompt(); }
+                return;
+            }
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const cmd = commitCommand();
+                runCommand(cmd);
+                showPrompt();
+            } else if (e.key === 'Backspace') {
+                e.preventDefault();
+                inputBuf = inputBuf.slice(0, -1);
+                renderInput();
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (cmdHistory.length && histIdx > 0) {
+                    histIdx--;
+                    inputBuf = cmdHistory[histIdx];
+                    renderInput();
+                }
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (histIdx < cmdHistory.length - 1) {
+                    histIdx++;
+                    inputBuf = cmdHistory[histIdx];
+                } else {
+                    histIdx = cmdHistory.length;
+                    inputBuf = '';
+                }
+                renderInput();
+            } else if (e.key === 'Tab') {
+                e.preventDefault();
+                const names = Object.keys(COMMANDS);
+                const matches = names.filter(n => n.startsWith(inputBuf));
+                if (matches.length === 1) {
+                    inputBuf = matches[0] + ' ';
+                    renderInput();
+                } else if (matches.length > 1) {
+                    print('<span class="out">' + matches.join('  ') + '</span>');
+                }
+            } else if (e.key.length === 1) {
+                inputBuf += e.key;
+                renderInput();
+            }
+        });
+
+        /* ===================== MATRIX EASTER EGG ===================== */
+        let matrixCanvas = null, matrixRAF = null;
+        function startMatrix() {
+            if (matrixCanvas) return;
+            const c = document.createElement('canvas');
+            c.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.92);cursor:pointer';
+            document.body.appendChild(c);
+            matrixCanvas = c;
+            const ctx = c.getContext('2d');
+            function size() { c.width = window.innerWidth; c.height = window.innerHeight; }
+            size();
+            window.addEventListener('resize', size);
+            const cols = Math.floor(c.width / 14);
+            const drops = new Array(cols).fill(1);
+            const glyphs = '01<>{}[]()/\\$;=*+_#@!?abcdefABCDEF0123456789';
+            function draw() {
+                ctx.fillStyle = 'rgba(0,0,0,0.08)';
+                ctx.fillRect(0, 0, c.width, c.height);
+                ctx.fillStyle = '#FFC107';
+                ctx.font = '14px JetBrains Mono, monospace';
+                for (let i = 0; i < drops.length; i++) {
+                    const ch = glyphs[Math.floor(Math.random() * glyphs.length)];
+                    ctx.fillText(ch, i * 14, drops[i] * 14);
+                    if (drops[i] * 14 > c.height && Math.random() > 0.975) drops[i] = 0;
+                    drops[i]++;
+                }
+                matrixRAF = requestAnimationFrame(draw);
+            }
+            draw();
+            const stop = () => {
+                if (!matrixCanvas) return;
+                cancelAnimationFrame(matrixRAF);
+                matrixCanvas.remove();
+                matrixCanvas = null;
+                window.removeEventListener('resize', size);
+                document.removeEventListener('keydown', stop, true);
+                c.removeEventListener('click', stop);
+            };
+            c.addEventListener('click', stop);
+            document.addEventListener('keydown', stop, true);
+        }
+
+intro();
+
+        /* ===================== MOUSE TRAIL ===================== */
+        if (!reduced) {
+            const chars = '01{}<>/$;=>_*+#';
+            let last = 0;
+            window.addEventListener('mousemove', (e) => {
+                const now = performance.now();
+                if (now - last < 45) return;
+                last = now;
+                const g = document.createElement('span');
+                g.className = 'glyph';
+                g.textContent = chars[Math.floor(Math.random() * chars.length)];
+                g.style.left = e.clientX + 'px';
+                g.style.top = e.clientY + 'px';
+                document.body.appendChild(g);
+                setTimeout(() => g.remove(), 900);
+            }, { passive: true });
+        }
+    })();
+    </script>
 </body>
 </html>
