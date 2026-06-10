@@ -38,7 +38,7 @@
         (function () {
             try {
                 var saved = localStorage.getItem('theme'); // 'light' | 'dark' | 'auto' | null
-                var mode  = saved || 'auto';
+                var mode  = saved || 'dark';
                 var sys   = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
                 var eff   = mode === 'auto' ? sys : mode;
                 document.documentElement.setAttribute('data-theme', eff);
@@ -377,7 +377,7 @@
         }
 
         const order = ['auto', 'light', 'dark'];
-        function current() { return html.getAttribute('data-theme-mode') || 'auto'; }
+        function current() { return html.getAttribute('data-theme-mode') || 'dark'; }
 
         applyMode(current());
         btn.addEventListener('click', () => {
