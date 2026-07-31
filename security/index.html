@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Policy - RunUntil Technologies GmbH</title>
+    <meta name="description" content="Vulnerability disclosure policy of RunUntil Technologies GmbH.">
+    <link rel="icon" type="image/png" href="/favicon-32.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #121212;
+            --bg-light: #1e1e1e;
+            --bg-lighter: #333333;
+            --text: #bebebe;
+            --text-dim: #8a8a8d;
+            --accent: #FFC107;
+            --accent-dim: #e68e0d;
+            --border: #333333;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .container { max-width: 700px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-dim);
+            text-decoration: none;
+            margin-bottom: 2rem;
+            font-size: 0.875rem;
+            transition: color 0.2s ease;
+        }
+        .back-link:hover { color: var(--accent); }
+
+        h1 { font-size: 1.75rem; margin-bottom: 0.5rem; font-weight: 600; color: var(--text); }
+        .subtitle { color: var(--text-dim); font-size: 0.875rem; margin-bottom: 2rem; }
+        h2 { font-size: 0.875rem; margin-top: 1.5rem; margin-bottom: 0.5rem; color: var(--accent); font-weight: 500; }
+        p { margin-bottom: 0.75rem; }
+        ul { margin: 0 0 0.75rem 1.25rem; }
+        li { margin-bottom: 0.25rem; }
+        a { color: var(--accent); text-decoration: none; }
+        a:hover { color: var(--accent-dim); }
+        code {
+            background: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 0.1rem 0.35rem;
+            font-size: 0.85em;
+        }
+        .footer-nav { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); font-size: 0.875rem; color: var(--text-dim); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-link">&larr; rununtil.com</a>
+
+        <h1>Security Policy</h1>
+        <p class="subtitle">Vulnerability disclosure policy of RunUntil Technologies GmbH</p>
+
+        <h2>Reporting a vulnerability</h2>
+        <p>
+            We take security reports seriously. If you believe you have found a
+            security vulnerability in any product or service operated by
+            RunUntil Technologies GmbH, please report it to:
+        </p>
+        <ul>
+            <li>Email: <a href="mailto:helmut@januschka.com">helmut@januschka.com</a></li>
+            <li>Machine-readable policy: <a href="/.well-known/security.txt">/.well-known/security.txt</a> (RFC 9116)</li>
+        </ul>
+        <p>
+            Please include a description of the issue, steps to reproduce,
+            affected product and version, and any proof-of-concept material.
+            Encrypted reports are welcome; request our PGP key via the address
+            above if needed.
+        </p>
+
+        <h2>Our response process</h2>
+        <ul>
+            <li>Acknowledgement of your report within <strong>3 business days</strong>.</li>
+            <li>Initial assessment and severity triage within <strong>7 business days</strong>.</li>
+            <li>Status updates at least every <strong>14 days</strong> until resolution.</li>
+            <li>Security fixes are prioritized ahead of feature work. Actively
+                exploited vulnerabilities with a straightforward fix are
+                targeted for remediation within <strong>30 days</strong>.</li>
+        </ul>
+
+        <h2>Browser products</h2>
+        <p>
+            For our Chromium-based browser products, we track the upstream
+            Chromium project's security releases and ship corresponding
+            updates promptly. Vulnerabilities fixed in our releases, including
+            applicable CVEs inherited from upstream Chromium, are published on
+            our <a href="/security/releases/">security releases</a> page,
+            mapping each vulnerability to the first fixed product version.
+        </p>
+        <p>
+            Issues in upstream Chromium itself are best reported directly to
+            the <a href="https://www.chromium.org/Home/chromium-security/reporting-security-bugs/">Chromium security team</a>;
+            we coordinate with upstream where appropriate.
+        </p>
+
+        <h2>Scope and safe harbor</h2>
+        <p>
+            We will not pursue legal action against researchers who, in good
+            faith:
+        </p>
+        <ul>
+            <li>respect user privacy and do not access, modify or exfiltrate data that is not their own,</li>
+            <li>do not degrade or disrupt our services (no DoS, no spam),</li>
+            <li>give us reasonable time to remediate before public disclosure (coordinated disclosure, typically 90 days),</li>
+            <li>do not demand payment as a condition of disclosure.</li>
+        </ul>
+        <p>
+            We are happy to credit reporters in our release notes unless you
+            prefer to remain anonymous.
+        </p>
+
+        <div class="footer-nav">
+            <a href="/security/releases/">Security releases</a> &middot;
+            <a href="/impressum.html">Impressum</a> &middot;
+            RunUntil Technologies GmbH
+        </div>
+    </div>
+</body>
+</html>

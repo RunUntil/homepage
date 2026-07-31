@@ -1,0 +1,5 @@
+Contact: mailto:helmut@januschka.com
+Expires: 2027-08-01T00:00:00.000Z
+Preferred-Languages: en, de
+Canonical: https://www.rununtil.com/.well-known/security.txt
+Policy: https://www.rununtil.com/security/
