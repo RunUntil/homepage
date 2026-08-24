@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RunUntil Technologies GmbH</title>
-    <meta name="description" content="RunUntil Technologies -- we run until it ships.">
+    <title>RunUntil Technologies GmbH - Full-Stack Down to the Compiler</title>
+    <meta name="description" content="Deep-tech engineering studio in Vienna. Product to web platform to browser engine to compiler -- and through every review process in between.">
     <meta name="color-scheme" content="dark light">
 
     <!-- Favicons -->
@@ -16,8 +16,8 @@
     <!-- OpenGraph -->
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="RunUntil Technologies">
-    <meta property="og:title" content="RunUntil Technologies">
-    <meta property="og:description" content="We run until it ships.">
+    <meta property="og:title" content="RunUntil Technologies - Full-Stack Down to the Compiler">
+    <meta property="og:description" content="We once fixed a compiler to fix a browser bug. We run until it ships.">
     <meta property="og:url" content="https://www.rununtil.com/">
     <meta property="og:image" content="https://www.rununtil.com/og-image.png">
     <meta property="og:image:width" content="512">
@@ -25,8 +25,8 @@
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="RunUntil Technologies">
-    <meta name="twitter:description" content="We run until it ships.">
+    <meta name="twitter:title" content="RunUntil Technologies - Full-Stack Down to the Compiler">
+    <meta name="twitter:description" content="We once fixed a compiler to fix a browser bug. We run until it ships.">
     <meta name="twitter:image" content="https://www.rununtil.com/og-image.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -113,7 +113,7 @@
         }
 
         main {
-            flex: 1;
+            min-height: 92vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -246,6 +246,144 @@
 
         @keyframes blink { to { visibility: hidden; } }
 
+        /* ===== Sections below the hero ===== */
+        .scroll-hint {
+            color: var(--text-dim);
+            font-size: 0.75rem;
+            animation: hintBob 2.2s ease-in-out infinite;
+        }
+        .scroll-hint::before { content: '$ '; color: var(--green); }
+        @keyframes hintBob { 50% { transform: translateY(4px); opacity: 0.6; } }
+
+        .sections {
+            position: relative;
+            z-index: 1;
+            width: min(880px, 100% - 3rem);
+            margin: 0 auto;
+            padding: 2rem 0 5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 5.5rem;
+        }
+
+        .section-label {
+            color: var(--green);
+            font-size: 0.8rem;
+            margin-bottom: 1.4rem;
+        }
+        .section-label::before { content: '$ '; }
+        .section-label .flag { color: var(--accent); }
+
+        .section-title {
+            font-size: clamp(1.4rem, 3.5vw, 2.1rem);
+            font-weight: 600;
+            color: var(--text);
+            line-height: 1.25;
+            margin-bottom: 0.9rem;
+            letter-spacing: -0.02em;
+        }
+        .section-title em { color: var(--accent); font-style: normal; }
+
+        .section-copy { color: var(--text-dim); font-size: 0.92rem; max-width: 640px; }
+        .section-copy strong { color: var(--text); font-weight: 500; }
+
+        /* Depth ladder */
+        .ladder { margin-top: 2rem; border-left: 1px solid var(--border); }
+        .ladder-row {
+            position: relative;
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 1.2rem;
+            padding: 0.85rem 0 0.85rem 1.4rem;
+        }
+        .ladder-row::before {
+            content: '';
+            position: absolute;
+            left: -4px;
+            top: 1.45rem;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--bg-bar);
+            border: 1px solid var(--border);
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+        .ladder-row:hover::before { background: var(--accent); box-shadow: 0 0 10px var(--accent-glow); }
+        .ladder-layer { color: var(--text); font-weight: 600; font-size: 0.88rem; }
+        .ladder-desc { color: var(--text-dim); font-size: 0.85rem; }
+        .ladder-row.deep .ladder-layer::after {
+            content: ' ↓';
+            color: var(--accent);
+        }
+
+        /* Story trace terminal */
+        .story-terminal {
+            margin-top: 2rem;
+            background: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            font-size: 0.85rem;
+        }
+        .story-body { padding: 1.2rem 1.3rem; white-space: pre-wrap; word-break: break-word; }
+        .story-body .depth { color: var(--text-dim); }
+        .story-body .hit { color: var(--accent); }
+        .story-punch {
+            border-top: 1px solid var(--border);
+            padding: 0.9rem 1.3rem;
+            color: var(--text);
+            font-size: 0.9rem;
+        }
+        .story-punch strong { color: var(--accent); font-weight: 600; }
+
+        /* Process grid */
+        .gauntlet {
+            margin-top: 2rem;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .gauntlet-cell { background: var(--bg-light); padding: 1.2rem 1.3rem; }
+        .gauntlet-cell h3 { font-size: 0.88rem; color: var(--text); font-weight: 600; margin-bottom: 0.4rem; }
+        .gauntlet-cell h3::before { content: '[ok] '; color: var(--green); font-weight: 400; }
+        .gauntlet-cell p { font-size: 0.8rem; color: var(--text-dim); }
+
+        /* CTA */
+        .cta-block {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg-light);
+            padding: clamp(1.5rem, 5vw, 3rem);
+            box-shadow: var(--shadow);
+        }
+        .cta-line { color: var(--text-dim); font-size: 0.85rem; margin-bottom: 1.4rem; }
+        .cta-line::before { content: '$ '; color: var(--green); }
+        .cta-actions { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.65rem 1.1rem;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: 1px solid var(--accent);
+            transition: transform 0.15s ease;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .btn.primary { background: var(--accent); color: #17120a; }
+        .btn.ghost { color: var(--accent); background: transparent; }
+
+        @media (max-width: 640px) {
+            .ladder-row { grid-template-columns: 1fr; gap: 0.15rem; }
+            .gauntlet { grid-template-columns: 1fr; }
+        }
+
         /* Mouse trail glyphs */
         .glyph {
             position: fixed;
@@ -310,6 +448,7 @@
             .logo-wrap::after  { animation: none; }
             .cursor            { animation: none; }
             .glyph             { display: none; }
+            .scroll-hint       { animation: none; }
         }
 
         @media (max-width: 600px) {
@@ -336,7 +475,69 @@
                 <span id="line1"></span><span id="line2"></span><span id="line3"></span><div id="history"></div><div id="active"></div>
             </div>
         </section>
+
+        <a class="scroll-hint" href="#depth">cd ./how-deep-we-go</a>
     </main>
+
+    <div class="sections">
+        <section id="depth" aria-label="Range across the stack">
+            <p class="section-label">rununtil <span class="flag">--map</span> ./stack</p>
+            <h2 class="section-title">Most teams stop at a boundary.<br><em>We don't have one.</em></h2>
+            <p class="section-copy">Product code, web platform, browser engine, system internals, compiler toolchain -- <strong>one head, whole stack.</strong> When the root cause moves down a layer, we follow it.</p>
+            <div class="ladder">
+                <div class="ladder-row"><span class="ladder-layer">product</span><span class="ladder-desc">apps, tooling, automation -- the thing users touch</span></div>
+                <div class="ladder-row"><span class="ladder-layer">web platform</span><span class="ladder-desc">html / css / js apis, specs, web platform tests</span></div>
+                <div class="ladder-row"><span class="ladder-layer">browser engine</span><span class="ladder-desc">chromium, blink, pdfium, v8 -- rendering, loading, lifecycle</span></div>
+                <div class="ladder-row"><span class="ladder-layer">system</span><span class="ladder-desc">networking, ipc, gpu, codecs, memory, sandboxing</span></div>
+                <div class="ladder-row deep"><span class="ladder-layer">toolchain</span><span class="ladder-desc">llvm, clang, rust -- yes, the compiler itself</span></div>
+            </div>
+        </section>
+
+        <section aria-label="How far we go">
+            <p class="section-label">rununtil <span class="flag">--trace</span> ./true-story</p>
+            <h2 class="section-title">How far do we actually go?</h2>
+            <div class="story-terminal">
+                <div class="terminal-bar">
+                    <span class="terminal-dot red"></span>
+                    <span class="terminal-dot yellow"></span>
+                    <span class="terminal-dot green"></span>
+                    <span class="terminal-title">trace.log</span>
+                </div>
+                <div class="story-body"><span class="prompt">$</span> <span class="cmd">rununtil fix chromium-bug</span>
+<span class="depth">  [1] chromium: bug confirmed, fix written</span>
+<span class="depth">  [2] build: blocked -- </span><span class="hit">the compiler miscompiles the fix</span>
+<span class="depth">  [3] llvm/clang: root cause found upstream</span>
+<span class="depth">  [4] llvm/clang: patch written, reviewed, </span><span class="ok">landed</span>
+<span class="depth">  [5] chromium: original fix </span><span class="ok">landed</span>
+<span class="ok">  done. exit 0</span></div>
+                <div class="story-punch">We once <strong>fixed the compiler</strong> to fix a browser bug. That is what "run until" means.</div>
+            </div>
+        </section>
+
+        <section aria-label="Moving changes through processes">
+            <p class="section-label">rununtil <span class="flag">--navigate</span> ./the-gauntlet</p>
+            <h2 class="section-title">Writing the code is half the job.<br><em>Landing it is the other half.</em></h2>
+            <p class="section-copy">Big open-source trees are guarded by review culture, owners, style rules, try bots, and standards processes. We have moved hundreds of changes through them -- we know how to get things <strong>moving</strong>.</p>
+            <div class="gauntlet">
+                <div class="gauntlet-cell"><h3>upstream review</h3><p>gerrit, github, phabricator -- reviewers across chromium, llvm, and friends</p></div>
+                <div class="gauntlet-cell"><h3>owners &amp; areas</h3><p>finding the right people, splitting changes so they can say yes quickly</p></div>
+                <div class="gauntlet-cell"><h3>proof &amp; testing</h3><p>regression tests, web platform tests, fuzzers, try bots kept green</p></div>
+                <div class="gauntlet-cell"><h3>specs &amp; process</h3><p>standards positions, intents, feature flags, metrics -- shipping the official way</p></div>
+            </div>
+        </section>
+
+        <section aria-label="Contact">
+            <div class="cta-block">
+                <p class="cta-line">rununtil --start</p>
+                <h2 class="section-title">Blocked below your codebase?<br>Need something the platform can't do yet?</h2>
+                <p class="section-copy" style="margin-bottom: 1.6rem;">Bring the problem. We'll tell you honestly which layer it lives in and what it takes to fix or build it -- all the way down if necessary.</p>
+                <div class="cta-actions">
+                    <a class="btn primary" href="mailto:helmut@januschka.com?subject=RunUntil%20inquiry">helmut@januschka.com</a>
+                    <a class="btn ghost" href="#terminal" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">back to the terminal</a>
+                </div>
+            </div>
+        </section>
+    </div>
 
     <footer>
         <a href="https://www.januschka.com">Blog</a>
